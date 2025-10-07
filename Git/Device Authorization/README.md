@@ -1,13 +1,13 @@
 # A. Prerequisites
 
-## 1. Initial actions to verify Git is installed
+## A1. Initial actions to verify Git is installed
 
 ```
 sudo apt install git -y
 git --version
 ```
 
-## 2. Set up your identity
+## A2. Set up your identity
 
 ```
 git config --global user.name "my_name"
@@ -20,8 +20,8 @@ git config --global user.email "my_email@example.com"
 * These help GitHub and other platforms to link commits to our personal account
 
 👉 Ideal Values:
-`user.name`: Any name we want to be displayed in the COMMIT HISTORY. It can be either our real name (`Thomas Thomas`) or our GitHub username or anything else to identify ourselves
-`user.email`: This must match to our GitHub-account associated email. If we don’t want our personal email to be exposed in commit history, GitHub provides a private noreply email like `12345678+username@users.noreply.github.com`. We can find it in GitHub under: `Settings → Emails → Keep my email address private`. If we set this as our Git email, commits still link to our profile, but don’t reveal our real email.
+* `user.name`: Any name we want to be displayed in the COMMIT HISTORY. It can be either our real name (`Thomas Thomas`) or our GitHub username or anything else to identify ourselves
+* `user.email`: This must match to our GitHub-account associated email. If we don’t want our personal email to be exposed in commit history, GitHub provides a private noreply email like `12345678+username@users.noreply.github.com`. We can find it in GitHub under: `Settings → Emails → Keep my email address private`. If we set this as our Git email, commits still link to our profile, but don’t reveal our real email.
 
 ## 3. After filling these values, we can inspect our choices by writing:
 
@@ -46,7 +46,7 @@ After typing this command, the VM would instruct us to fill in the username and 
 
 So, now in order to connect/authenticate your machine/VM to your GitHub account, you should do this:
 
-## 1. Go in our VM's CLI and create an SSH keys
+## C1. Go in our VM's CLI and create an SSH keys
 
 ```
 which ssh-keygen		# Verify if this command is installed in Linux
@@ -69,7 +69,7 @@ SHA256:/+.............. my_email@example.com
 
 Also, the key's randomart image is also displayed.
 
-## 2. Start the ssh-agent and add our key
+## C2. Start the ssh-agent and add our key
 
 ```
 eval "$(ssh-agent -s)"
@@ -87,40 +87,59 @@ CLI output will be in this format:
 Identity added: /home/linux_username/.ssh/id_ed25519 (my_email@example.com)"
 ```
 
-## 3. Copy our public key and add it to GitHub
+## C3. Copy our public key and add it to GitHub
+
+```
 cat ~/.ssh/id_ed25519.pub
-This will print one line that we need to copy in order to paste it afterwards in GitHub.
-The line is in this format: 
-"ssh-ed25519 <......long_random_key.......> my_email@example.com"
+```
+
+This will print one line that we need to copy in order to paste it afterwards in GitHub. The line is in this format: 
+
+```
+ssh-ed25519 <......long_random_key.......> my_email@example.com
+```
+
 We should copy the ENTIRE line.
 
-4. Paste our public key in our GitHub using a browser
-In GitHub, go to “Settings → SSH and GPG keys → New SSH key”. In the title section, write something like "Machine_Name_SSH_KEY". Paste the key and then save.
+## C4. Paste our public key in our GitHub using a browser
+In GitHub, go to `Settings → SSH and GPG keys → New SSH key`. In the title section, write something like `Machine_Name_SSH_KEY`. Paste the key and then save.
 
-5. Test the SSH connection from our machine/VM terminal
-$ ssh -T git@github.com
+## C5. Test the SSH connection from our machine/VM terminal
 
-The first time, you type this command, you will sth like this:
+```
+ssh -T git@github.com
+```
 
+The first time, you type this command, you will sth like this: 
+
+```
 The authenticity of host 'github.com ...' can't be established.
 ……………………………………………………………………………………..
 Are you sure you want to continue connecting (yes/no/[fingerprint])?
+```
 
-This is super normal the first time we connect to a new host with SSH. By typing "yes", the system will save GitHub’s fingerprint in:  “/home/linux_username/.ssh/known_hosts”. From now on, it won’t ask us again (unless the host key changes, which could indicate a man-in-the-middle attack).
+This is super normal the first time we connect to a new host with SSH. By typing `yes`, the system will save GitHub’s fingerprint in:  `/home/linux_username/.ssh/known_hosts`. From now on, it won’t ask us again (unless the host key changes, which could indicate a man-in-the-middle attack). Finally, a greeting message will appear saying:
 
-Finally, a greeting message will appear saying:
-"Hi <GitHub_username>! You've successfully authenticated, but GitHub does not provide shell access."
-This means that our SSH key worked and GitHub recognized our account. The phrase “does not provide shell access” is also normal, since GitHub doesn’t give us a remote shell, it only accepts Git commands.
+```
+Hi <GitHub_username>! You've successfully authenticated, but GitHub does not provide shell access.
+```
 
-6. Clone the desired repo
-After this, we can successfully "git clone" an existing GitHub repo like this:
-$ git clone git@github.com:<GitHub_username>/<repo_name>.git
+This means that our SSH key worked and GitHub recognized our account. The phrase `does not provide shell access` is also normal, since GitHub doesn’t give us a remote shell, it only accepts Git commands.
+
+## C6. Clone the desired repo
+
+After this, we can successfully `git clone` an existing GitHub repo like this:
+
+```
+git clone git@github.com:<GitHub_username>/<repo_name>.git
+```
 
 The output will be like this:
 
+```
 Cloning into '<repo_name>'...
 remote: Enumerating objects: 3, done.
 remote: Counting objects: 100% (3/3), done.
 remote: Total 3 (delta 0), reused 0 (delta 0), pack-reused 0 (from 0)
 Receiving objects: 100% (3/3), done.
-
+```
