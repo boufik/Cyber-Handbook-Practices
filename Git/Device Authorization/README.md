@@ -14,55 +14,80 @@ git config --global user.name "my_name"
 git config --global user.email "my_email@example.com"
 ```
 
-⚠️ About the values inside  the "" for both user.name and user.email:
-They are NOT ABOUT REAL AUTHENTICATION - they are about our personal identity
-These values are recorded and shown in EVERY COMMIT we make
-These help GitHub and other platforms to link commits to our personal account
+⚠️ About the values inside  the `""` for both `user.name` and `user.email`:
+* They are NOT ABOUT REAL AUTHENTICATION - they are about our personal identity
+* These values are recorded and shown in EVERY COMMIT we make
+* These help GitHub and other platforms to link commits to our personal account
 
 👉 Ideal Values:
-user.name: Any name we want to be displayed in the COMMIT HISTORY. It can be either our real name ("Tom Cruise") or our GitHub username or anything else to identify ourselves
-user.email: This must match to our GitHub-account associated email. If we don’t want our personal email to be exposed in commit history, GitHub provides a private noreply email like "12345678+username@users.noreply.github.com". We can find it in GitHub under: "Settings → Emails → Keep my email address private". If we set this as our Git email, commits still link to our profile, but don’t reveal our real email.
+`user.name`: Any name we want to be displayed in the COMMIT HISTORY. It can be either our real name (`Thomas Thomas`) or our GitHub username or anything else to identify ourselves
+`user.email`: This must match to our GitHub-account associated email. If we don’t want our personal email to be exposed in commit history, GitHub provides a private noreply email like `12345678+username@users.noreply.github.com`. We can find it in GitHub under: `Settings → Emails → Keep my email address private`. If we set this as our Git email, commits still link to our profile, but don’t reveal our real email.
 
-3. After filling these values, we can inspect our choices by writing:
+## 3. After filling these values, we can inspect our choices by writing:
+
+```
 git config --global user.name
 git config --global user.email
+```
 
-OLD METHOD
+
+# B. OLD METHOD
+
 Until 2021, in order to clone our private repo from GitHub to our desired Ubuntu/Windows Host Machine, we should run:
 
+```
 git clone https://github.com/<username>/DataCamp-Git.git
+```
 
 After typing this command, the VM would instruct us to fill in the username and the password from our GitHub account. But this does NOT work now. A new method with SSH keys should be used.
 
-NEW METHOD - SSH KEY
+
+# C. NEW METHOD - SSH KEY
+
 So, now in order to connect/authenticate your machine/VM to your GitHub account, you should do this:
 
-1. Go in our VM's CLI and create an SSH keys
+## 1. Go in our VM's CLI and create an SSH keys
+
+```
 which ssh-keygen		# Verify if this command is installed in Linux
 ssh-keygen -t ed25519 -C "my_email@example.com"
+```
 
 After typing the command, the CLI output is:
 
+```
 Generating public/private ed25519 key pair.
 Enter file in which to save the key (/home/linux_username/.ssh/id_ed25519)
 Press Enter to accept default file location (/home/linux_username/.ssh/id_ed25519)
+```
 
-Optionally, we can set a passphrase (recommended) or we can simply leave empty by typing two "Enter" keys in the next shell prompt.
+Optionally, we can set a passphrase (recommended) or we can simply leave empty by typing two `Enter` keys in the next shell prompt. After doing this, our key is generated, and the CLI prints the key fingerprint in a new line:
 
-After doing this, our key is generated, and the CLI prints the key fingerprint in a new line:
-"SHA256:/+.............. my_email@example.com"
+```
+SHA256:/+.............. my_email@example.com
+```
+
 Also, the key's randomart image is also displayed.
 
-2. Start the ssh-agent and add our key
+## 2. Start the ssh-agent and add our key
 
+```
 eval "$(ssh-agent -s)"
-CLI will print a message like: "Agent pid <number>"
+```
 
+CLI will print a message like: `Agent pid <number>`. Then, execute:
+
+```
 ssh-add ~/.ssh/id_ed25519
-CLI output will be in this format:
-"Identity added: /home/linux_username/.ssh/id_ed25519 (my_email@example.com)"
+```
 
-3. Copy our public key and add it to GitHub
+CLI output will be in this format:
+
+```
+Identity added: /home/linux_username/.ssh/id_ed25519 (my_email@example.com)"
+```
+
+## 3. Copy our public key and add it to GitHub
 cat ~/.ssh/id_ed25519.pub
 This will print one line that we need to copy in order to paste it afterwards in GitHub.
 The line is in this format: 
