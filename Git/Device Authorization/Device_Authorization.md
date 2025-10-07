@@ -84,7 +84,7 @@ ssh-add ~/.ssh/id_ed25519
 CLI output will be in this format:
 
 ```
-Identity added: /home/linux_username/.ssh/id_ed25519 (my_email@example.com)"
+Identity added: ~/.ssh/id_ed25519 (my_email@example.com)
 ```
 
 ## 3c. Copy our public key and add it to GitHub
@@ -115,11 +115,11 @@ The first time, you type this command, you will sth like this:
 
 ```
 The authenticity of host 'github.com ...' can't be established.
-……………………………………………………………………………………..
+…………………………………………………………………………………………………………………………………………………………………………
 Are you sure you want to continue connecting (yes/no/[fingerprint])?
 ```
 
-This is super normal the first time we connect to a new host with SSH. By typing `yes`, the system will save GitHub’s fingerprint in:  `/home/linux_username/.ssh/known_hosts`. From now on, it won’t ask us again (unless the host key changes, which could indicate a man-in-the-middle attack). Finally, a greeting message will appear saying:
+This is super normal the first time we connect to a new host with SSH. By typing `yes`, the system will save GitHub’s fingerprint in:  `~/.ssh/known_hosts`. From now on, it won’t ask us again (unless the host key changes, which could indicate a man-in-the-middle attack). Finally, a greeting message will appear saying:
 
 ```
 Hi <GitHub_username>! You've successfully authenticated, but GitHub does not provide shell access.
