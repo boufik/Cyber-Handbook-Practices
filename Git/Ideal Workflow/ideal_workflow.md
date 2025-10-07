@@ -62,7 +62,7 @@ If `main` moved forward while you were coding:
 
 Once approved and tests pass, merge via GitHub. Preferred strategy for beginners: `Squash and Merge` → keeps main clean with one commit per feature.
 
-✅ Why: main stays tidy, history is easy to read.
+✅ Why: `main` stays tidy, history is easy to read.
 
 # 8. Clean up
 
@@ -89,44 +89,48 @@ After merge:
 # Steps Cheat-Sheet
 
 ```
-# Start new work
+# Start new branch
 git checkout main
 git pull origin main
-git checkout -b feature/my-change
+git checkout -b feature_branch
 
-# Do edits
+# Modify files
 git add .
-git commit -m "Add feature XYZ"
+git commit -m "Added this specific feature"
 
-# Publish branch
-git push -u origin feature/my-change
+# Publish the branch into the remote repo
+git push -u origin feature_branch
 
-# (Later, if main updated)
+# Create the PR using GitHub GUI
+
+# If main was updated in the meanwhile
 git fetch origin
 git merge origin/main
 git push
 
-# After PR merged
+# Merge the PR
+
+# After PR is merged
 git checkout main
 git pull origin main
-git branch -d feature/my-change
-git push origin --delete feature/my-change
+git branch -d feature_branch
+git push origin --delete feature_branch
 ```
 
 # Fix mistake with branches
 
 Suppose that I have made a mistake, and after the `git clone` command (or `git checkout main` and `git pull origin main`), I accidentally forgot to create a new branch named `feature_branch`. 
 
-## Current Situation
+## Executed Commands
 
 ```
 git checkout main
-git pull origin main   		# I am up-to-date
+git pull origin main
 # I forgot to branch
 # I made changes, staged them + committed directly on main (locally)
 ```
 
-Now, I have local `commit`s on main that are not yet `push`ed. I want to:
+Now, I have local commits on main that are not yet pushed. I want to:
 
 * keep my work,
 * avoid pushing directly to `origin/main`,
@@ -151,10 +155,10 @@ I will move the `main` branch back, so that it can match the remote version. Thi
 ```
 git checkout main
 git fetch origin					           # Step to reset
-git reset --hard origin/main		  # Step to reset
+git reset --hard origin/main		     # Step to reset
 ```
 
-This removes the local commits from main (but they’re safe — they live on the new branch now).  Now, the local main is clean and synced again.
+This removes the local commits from `main` (but they’re safe — they live on the new branch now).  Now, the local `main` is clean and synced again.
 
 ### 3. `Push` your new branch to GitHub
 
