@@ -6,7 +6,7 @@
 | 2  | Start a container from an image, while giving it a **name** | `docker run --name <container_name> <image_name>` |
 | 3  | Start a container from an image, while starting an **interactive shell** | `docker run -it <image_name>` |
 | 4  | Start a container from an image, making it **detached** (running in background) | `docker run -d <image_name>` |
-| 5  | Restart a running container | `docker restart <container_name_or_id>` |
+| 5  | Restart a running container (**running or stopped**) | `docker restart <container_name_or_id>` |
 | 6  | Rename a container | `docker rename <old_name> <new_name>` |
 | 7  | Stop a running container | `docker stop <container_name_or_id>` |
 | 8  | Force-stop a running container (**kill immediately, no graceful shutdown**) | `docker kill <container_name_or_id>` |
