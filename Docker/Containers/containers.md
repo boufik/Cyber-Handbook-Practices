@@ -1,14 +1,25 @@
+# 1. Manage Container's Lifecycle
+
 | No | Action | Command |
 |:-----|:------|:------|
 | 1  | Start a container from an image | `docker run <image_name>` |
-| 2  | Start a container from an image, while giving it a name | `docker run --name <container_name> <image_name>` |
-| 3  | Start a container from an image, while starting an interactive shell | `docker run -it <image_name>` |
-| 4  | Start a container from an image, making it detached (running in background) | `docker run -d <image_name>` |
-| 5  | List **ALL** containers (running + stopped) | `docker ps -a` |
-| 6  | List only the **RUNNING** containers | `docker ps` |
-| 7  | Filter **RUNNING** containers by name | `docker ps -f "name=<container_name>"` |
-| 8  | View **EXISTING** logs from a container | `docker logs <container_name_or_id>` |
-| 9  | View **LIVE** logs from a container | `docker logs -f <container_name_or_id>` |
-| 10  | Stop a running container | `docker stop <container_name_or_id>`
-| 11 | Force-stop a running container (kill immediately, no graceful shutdown) | `docker kill <container_name_or_id>` |
+| 2  | Start a container from an image, while giving it a **name** | `docker run --name <container_name> <image_name>` |
+| 3  | Start a container from an image, while starting an **interactive shell** | `docker run -it <image_name>` |
+| 4  | Start a container from an image, making it **detached** (running in background) | `docker run -d <image_name>` |
+| 5  | List **all** containers (running + stopped) | `docker ps -a` |
+| 6  | List only the **running** containers | `docker ps` |
+| 7  | Filter **running** containers by name | `docker ps -f "name=<container_name>"` |
+| 8  | View **existing** logs from a container | `docker logs <container_name_or_id>` |
+| 9  | View **live** logs from a container | `docker logs -f <container_name_or_id>` |
+| 10 | Stop a running container | `docker stop <container_name_or_id>`
+| 11 | Force-stop a running container (**kill immediately, no graceful shutdown**) | `docker kill <container_name_or_id>` |
 | 12 | Remove a stopped container | `docker container rm <container_name_or_id>` |
+| 13 | Restart a running container | `docker restart <container_name_or_id>` |
+| 14 | Execute a single command inside a running container | `docker exec -it <container_name_or_id> <command>` |
+| 15 | Spawn an interactive shell inside a running container (to execute commands) | `docker exec -it <container_name_or_id> /bin/bash` |
+| 16 | Inspect detailed configuration and metadata of a container | `docker inspect <container_name_or_id>` |
+| 17 | View real-time resources usage (CPU, memory) of a container | `docker stats <container_name_or_id>` |
+| 18 | View the processes running inside a container | `docker top <container_name_or_id>` |
+| 19 | Rename a container | `docker rename <old_name> <new_name>` |
+
+# 2. Inspection and Interaction
