@@ -1,4 +1,13 @@
-# 1. DockerHub
+# 1. Run an image
+
+| No | Action | Command |
+|:----:|:----|:----|
+| 1 | Start a container from an image | `docker run <image_name>` |
+| 2 | Override the CMD command of the Dockerfile | `docker run <image_name> <shell_command>` |
+| 3 | Start a container from an image spawning an **interactive shell** | `docker run -it <image_name>` |
+| 4 | Override the CMD command of the Dockerfile spawning an **interactive shell** | `docker run -it <image_name> <shell_command>` |
+
+# 2. DockerHub
 
 | No | Action | Command |
 |:----:|:----|:----|
@@ -7,7 +16,7 @@
 | 3 | Pull a **specific version** of an image | `docker pull <image_name>:<image_version>` |
 
 
-# 2. Private Registries
+# 3. Private Registries
 
 | No | Action | Command |
 |:----:|:----|:----|
@@ -17,7 +26,7 @@
 | 4 | Push an image to a private registry | `docker image push <private_registry_url>/<image_name>` |
 
 
-# 3. Inspection
+# 4. Inspection
 
 | No | Action | Command |
 |:----:|:----|:----|
@@ -27,7 +36,7 @@
 | 4 | Show detailed **metadata** about an image | `docker inspect <image_name>` |
 | 5 | Show an image's **history** - including the layers used (do NOT store secrets in Dockerfile layers) | `docker history <image_name>` |
 
-# 4. Maintenance
+# 5. Maintenance
 
 | No | Action | Command |
 |:----:|:----|:----|
@@ -36,7 +45,7 @@
 | 3 | Export a container's filesystem as a `.tar` file | `docker export <container_name> -o <tar_file>` |
 | 4 | Import an exported filesystem as an image | `docker import <tar_file> <image_name>` |
 
-# 5. Cleanup
+# 6. Cleanup
 
 | No | Action | Command |
 |:----:|:----|:----|
