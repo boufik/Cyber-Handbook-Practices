@@ -34,8 +34,8 @@
 | 25 | Push a **local branch to the remote repo**  | `git push -u origin <branch_name>` | In the remote repo, if there is NO branch named `<branch_name>`, a new PR will be created in order for peers to review and then manually merge the changes if there are NO conflicts - This is the **best-practice** |
 | 26 | Pull the **latest remote** changes | `git pull origin <branch_name>` | `git pull origin main` — always do before pushing, like a method of syncing |
 | 27 | Push committed changes to remote  | `git push`  | Sends all **local commits** on current branch. |
-| 28 | View configured remotes | `git remote -v` | Lists fetch/push URLs for the repo. |
 | | | | |
-| 29 | Add a new remote repo | `git remote add origin <repo_url>` | `git remote add origin git@github.com:<user>/<new_project_name>.git` |
-| 30 | Rename a remote | `git remote rename origin upstream` | Useful when **forking** projects. |
-| 31 | Remove a remote | `git remote remove <name>` | `git remote remove upstream` |
+| 28 | Add a new remote repo | `git remote add origin <repo_url>` | `git remote add origin git@github.com:<user>/<new_project_name>.git` creates a remote project named `<new_project_name>`. |
+| 29 | Rename a remote | `git remote rename origin upstream` | Useful when **forking** projects. |
+| 30 | Remove a remote | `git remote remove <name>` | `git remote remove upstream` |
+| 31 | View configured remotes | `git remote -v` | Lists fetch/push URLs for the repo. |
