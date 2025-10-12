@@ -25,7 +25,7 @@
 | 2 | List **all local** images including the **dangling** ones | `docker images -a` |
 | 3 | List **all image IDs** | `docker images -q` |
 | 4 | Show detailed **metadata** about an image | `docker inspect <image_name>` |
-| 5 | Show an image's **history** | `docker history <image_name>` |
+| 5 | Show an image's **history** - including the layers used (do NOT store secrets in Dockerfile layers) | `docker history <image_name>` |
 
 # 4. Maintenance
 
