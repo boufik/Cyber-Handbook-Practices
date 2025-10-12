@@ -32,4 +32,4 @@
 
 # 3. Notes
 
-In every command that we can use `<image_name>` or `container_name`, we can instead use the image/container's ID like this: `<image_id>` or `container_id`.
+In every command that we can use `<image_name>` or `<container_name>`, we can instead use the image/container's ID like this: `<image_id>` or `<container_id>`.
