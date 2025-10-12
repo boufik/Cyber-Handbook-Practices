@@ -18,24 +18,25 @@
 | 16 | 389 | LDAP |
 | 17 | 443 | HTTPS |
 | 18 | 445 | SMB |
-| 19 | 514 | Syslog |
-| 20 | 636 | LDAPS |
-| 21 | 830 | NETCONF (used by O-RAN and controllers) |
-| 21 | 993 | IMAPS |
-| 22 | 995 | POP3S |
-| 23 | 1443 | Microsoft SQL Server |
-| 24 | 1521 | Oracle DB |
-| 25 | 1723 | PPTP |
-| 26 | 1900 | UPnP |
-| 27 | 2123 | 5G's GTP-C (N4) |
-| 28 | 2152 | 5G's GTP-U (LTE legacy) |
-| 29| 2302 | DayZ |
-| 30 | 3306 | MySQL |
-| 31 | 3389 | RDP |
-| 32 | 3868 | 5G's Diameter |
-| 33 | 5671/5672 | 5G's AMQPS/AMQP |
-| 34 | 8805 | 5G's GTP-U (N3) |
-| 35 | 9090 | 5G's gRP telemetry |
-| 36 | 9091 | 5G's Prometheus |
-| 37 | 36412 | LTE's S1AP |
-| 38 | 38412 | 5G's NGAP (N2) |
+| 19 | 502 | Modbus |
+| 20 | 514 | Syslog |
+| 21 | 636 | LDAPS |
+| 22 | 830 | NETCONF (used by O-RAN and controllers) |
+| 23 | 993 | IMAPS |
+| 24 | 995 | POP3S |
+| 25 | 1443 | Microsoft SQL Server |
+| 26 | 1521 | Oracle DB |
+| 27 | 1723 | PPTP |
+| 28 | 1900 | UPnP |
+| 29 | 2123 | 5G's GTP-C (N4) |
+| 30 | 2152 | 5G's GTP-U (LTE legacy) |
+| 31| 2302 | DayZ |
+| 32 | 3306 | MySQL |
+| 33 | 3389 | RDP |
+| 34 | 3868 | 5G's Diameter |
+| 35 | 5671/5672 | 5G's AMQPS/AMQP |
+| 36 | 8805 | 5G's GTP-U (N3) |
+| 37 | 9090 | 5G's gRP telemetry |
+| 38 | 9091 | 5G's Prometheus |
+| 39 | 36412 | LTE's S1AP |
+| 40 | 38412 | 5G's NGAP (N2) |
