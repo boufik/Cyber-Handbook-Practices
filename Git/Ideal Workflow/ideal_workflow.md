@@ -184,3 +184,12 @@ git branch -d feature_branch
 git push origin --delete feature_branch
 ```
 
+
+# Sync local disk files with remote repo files
+
+Suppose that I work in `main` branch locally and I did a mistake by modifying some files. If I want to "reset" all these local disk-located files into the state they are in the latest commit in the remote GitHub repo, I should do:
+
+```
+git fetch origin main
+git restore <filename>
+```
