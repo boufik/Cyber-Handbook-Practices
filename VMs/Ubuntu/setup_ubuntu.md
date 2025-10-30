@@ -110,3 +110,7 @@ sudo usermod -aG docker $USER
 ```
 
 In order for the last command to be "registered", we need to restart our VM. So, in the next VM session, we will execute Docker commands without `sudo`.
+
+# 4. Snapshot
+
+Before, we turn off our VM, it is a great idea to create a snapshot of the current state.
