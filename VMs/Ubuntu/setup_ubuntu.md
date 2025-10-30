@@ -23,10 +23,18 @@
 
 * The `Hard Disk File Location and Size` should look like this: `C:\Users\thoma\VirtualBox VMs\Test\Test.vdi`.
 * The first option `Create a Virtual Hard Disk Now` is usually automatically selected. Leave it this way. Put a value higher than `20 GB` in your VM.
-* Finally, leave the field `[re-allocate Full Size` unselected.
+* Finally, leave the field `Pre-allocate Full Size` unselected. If we select it, then the size of the VM storage will be fixed and will not be able to increase to fit our needs. We need dynamic space allocation.
 
 ## Next Steps
 
-After configuring all these tabs, our VM will automatically start running and downloading the necessary packages. This may take some time. In any case, the output should look like this:
+After pressing `Finish`, the VM should automatically start running and downloading the necessary packages. If we do not see anything for some time at the beginning, we can always terminate the VM session. Then, we can configure its settings. Right-click in the VM using the GUI of VirtualBox and then press `Settings`. In the `Display` tab, set the `Video Memory` to the highest value (typically `128 MB`). Also, if we want our VM to automatically take an IP in the range of `192.168.0.0/16`, we need to go to the `Network` tab and change the value to `Bridged Adapter`. The `Name` will be in this form `Realtek ____CE Wireless LAN 802.11__ PCI NIC`, which is the NIC card.
+
+Now, if we had terminated our VM previously, we need to restart it. Press `Try or install Ubuntu` and the installation will begin shortly. If extra prompts appear next, press `Install` and `Erase disk and install Ubuntu` (it does not refer to the original disk of our host machine). This may take some time. In any case, the output should look like this:
 
 ![Ubuntu Downloads]()
+
+After the installation is complete, Ubuntu prompts us to fill in some other fields like username, password, computer name and region. Leave the field `Require my password to log in` **selected**. Then, Ubuntu instrcut us we had better restart our VM, so we follow this instruction.
+
+# After the first VM's reboot
+
+
