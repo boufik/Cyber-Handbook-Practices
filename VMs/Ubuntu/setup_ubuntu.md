@@ -31,7 +31,7 @@ After pressing `Finish`, the VM should automatically start running and downloadi
 
 Now, if we had terminated our VM previously, we need to restart it. Press `Try or install Ubuntu` and the installation will begin shortly. If extra prompts appear next, press `Install` and `Erase disk and install Ubuntu` (it does not refer to the original disk of our host machine). This may take some time. In any case, the output should look like this:
 
-![Ubuntu Downloads]()
+![Ubuntu Downloads](https://github.com/boufik/Cyber-Handbook-Practices/blob/main/VMs/Ubuntu/Images/ub24_being_installed.png)
 
 After the installation is complete, Ubuntu prompts us to fill in some other fields like username, password, computer name and region. Leave the field `Require my password to log in` **selected**. Then, Ubuntu instrcut us we had better restart our VM, so we follow this instruction.
 
