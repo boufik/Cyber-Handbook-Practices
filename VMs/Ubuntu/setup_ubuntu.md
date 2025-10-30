@@ -37,4 +37,28 @@ After the installation is complete, Ubuntu prompts us to fill in some other fiel
 
 # After the first VM's reboot
 
+## 1. Update and upgrade
+After the reboot, Ubuntu asks us some other things like reporting problems, diagnostics, e.t.c. Then, we need to update and upgrade our system using the commands:
 
+```
+sudo apt update
+sudo apt upgrade -y
+sudo apt install -y build-essential linux-headers-$(uname -r)
+```
+
+The system has been updated by installing the essential build tools and kernel headers on Ubuntu (Debian-based).
+
+![Ubuntu Downloads](https://github.com/boufik/Cyber-Handbook-Practices/blob/main/VMs/Ubuntu/Images/ub24_apt_upgrade.png)
+
+## 2. Install Guest Additions
+
+In the navigation bar of VM, click on `Devices` and then `Insert Guest Additions CD image`. By doing so, in the left sidebar of Ubuntu, a logo with a disk appears. Clicking the disk logo opens a directory in the form `/media/<username>/VBox_GAs_7.1.12`. Inside, we can find several folders and files, but we only care about the `autorun.sh` file though. Right-click this file and select `Run as a program`. Insert your password and then the script runs. Among the output lines of the running shell are:
+```
+Verifying archive integrity... 100%     MD5 checksums are OK. All good.
+Uncompressing VirtualBox 7.1.12 Guest Additions for Linux    100%
+VirualBox Guest Additions installer
+VirualBox Guest Additions: Starting
+VirualBox Guest Additions: Setting up modules
+```
+
+After the installation, we can press any key (e.g. `Enter`) in the console and then we can safely restart again our VM.
