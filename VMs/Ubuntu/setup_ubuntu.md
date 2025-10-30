@@ -1,4 +1,4 @@
-# VirtualBox
+# 1. VirtualBox
 
 ## Tab 1 - Name and Operating System
 
@@ -35,9 +35,9 @@ Now, if we had terminated our VM previously, we need to restart it. Press `Try o
 
 After the installation is complete, Ubuntu prompts us to fill in some other fields like username, password, computer name and region. Leave the field `Require my password to log in` **selected**. Then, Ubuntu instructs us to restart our VM, so we ned to follow this instruction.
 
-# After the first VM's reboot
+# 2. After the first VM's reboot
 
-## 1. Update and upgrade
+## 2a. Update and upgrade
 After the reboot, Ubuntu asks us some other things like reporting problems, diagnostics, e.t.c. Then, we need to update and upgrade our system using the commands:
 
 ```
@@ -50,7 +50,7 @@ The system has been updated by installing the essential build tools and kernel h
 
 ![Ubuntu Downloads](https://github.com/boufik/Cyber-Handbook-Practices/blob/main/VMs/Ubuntu/Images/ub24_apt_upgrade.png)
 
-## 2. Install Guest Additions
+## 2b. Install Guest Additions
 
 In the navigation bar of VM, click on `Devices` and then `Insert Guest Additions CD image`. By doing so, in the left sidebar of Ubuntu, a logo with a disk appears. Clicking the disk logo opens a directory in the form `/media/<username>/VBox_GAs_7.1.12`. Inside, we can find several folders and files, but we only care about the `autorun.sh` file though. Right-click this file and select `Run as a program`. Insert your password and then the script runs. Among the output lines of the running shell are:
 ```
@@ -62,3 +62,51 @@ VirualBox Guest Additions: Setting up modules
 ```
 
 After the installation, we can press any key (e.g. `Enter`) in the console and then we can safely restart again our VM.
+
+# 3. Install packages
+
+For any package we install we can use the `sudo apt install` or `sudo snap install` command (optionally with the falg `-y`), and then we can verify if the software is installed by writing a command like `<package_name> --version` or `<package_name> -v`.
+
+```
+sudo apt install -y pip
+pip --version
+```
+Output: `pip 24.0 from /usr/lib/python3/dist-packages/pip (python 3.12)`.
+
+```
+sudo apt install -y git
+git --version
+```
+Output: `git 2.43.0`.
+
+```
+sudo apt install -y net-tools
+```
+Output: the command `ifconfig` should work now.
+
+```
+sudo apt install -y curl
+curl --version
+```
+Output: `curl 8.5.0 (x86_64-pc-linux-gnu) ...`.
+
+```
+sudo snap install docker
+docker --version
+```
+Output: `docker 28.4.0 from Canonical✅ installed`.
+
+```
+sudo apt install -y docker-compose
+docker-compose --version
+```
+Output: `docker-compose 1.29.2, build unknown`.
+
+Sometimes, we want to execute Docker-related commands without needing to include `sudo` in every command. For this purpose, we need to create the Docker `group` and add our user to the group:
+
+```
+sudo groupadd docker
+sudo usermod -aG docker $USER
+```
+
+In order for the last command to be "registered", we need to restart our VM. So, in the next VM session, we will execute Docker commands without `sudo`.
