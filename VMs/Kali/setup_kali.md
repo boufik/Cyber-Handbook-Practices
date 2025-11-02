@@ -180,6 +180,32 @@ sudo usermod -aG docker $USER
 
 In order for the last command to be "registered", we need to restart our VM. So, in the next VM session, we will able to execute Docker commands without `sudo`.
 
+## 4d. Install Google Chrome
+
+In the Firefox browser, search for `chrome`. Click on the first link `Google Chrome - The Fast $ Secure Web Browser ...` and in the next webpage, click on `64 bit .deb (For Fedora/Ubuntu)` and press `Accept and Install`. The Debian package is downloaded under the directory `~/Downloads`. So, navigate to the current directory and verify the fact that this `.deb` package is installed there:
+
+```
+cd ~/Downloads
+ls
+```
+
+Terminal should print the package `google-chrome-stable_current_amd64.deb`. First, update your system through:
+
+```
+sudo apt update
+```
+
+And finally, install the Debian package via the command:
+
+```
+sudo apt install ./google-chrome-stable_current_amd64.deb
+```
+
+![Kali - Update and Upgrade](https://github.com/boufik/Cyber-Handbook-Practices/blob/main/VMs/Kali/Images/kali_docker.png)
+
+Now, Google Chrome has been successfully installed in our system and we can search for it in the applications.
+
+
 # 5. Snapshot
 
 Before, we turn off our VM, it is a great idea to create a snapshot of the current state.
