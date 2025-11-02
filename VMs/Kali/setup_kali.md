@@ -119,7 +119,7 @@ sudo chmod 777 VBoxLinuxAdditions.run
 sudo ./VBoxLinuxAdditions.run
 ```
 
-![Kali - Update and Upgrade](https://github.com/boufik/Cyber-Handbook-Practices/blob/main/VMs/Kali/Images/kali_execute_run.png)
+![Kali - Install Guest Additions](https://github.com/boufik/Cyber-Handbook-Practices/blob/main/VMs/Kali/Images/kali_execute_run.png)
 
 This will take about a minute to run after typing `yes` to the terminal prompt. Then, restart again your VM by typing `reboot` in order for these changes to be applied.
 
@@ -161,7 +161,7 @@ sudo apt install -y docker-ce docker-ce-cli containerd.io
 
 The output in the console should look like this:
 
-![Kali - Update and Upgrade](https://github.com/boufik/Cyber-Handbook-Practices/blob/main/VMs/Kali/Images/kali_docker.png)
+![Kali - Docker](https://github.com/boufik/Cyber-Handbook-Practices/blob/main/VMs/Kali/Images/kali_docker.png)
 
 If all things were done properly, you can now see a Docker version like `28.5.1`, when typing the command"
 
@@ -195,16 +195,42 @@ Terminal should print the package `google-chrome-stable_current_amd64.deb`. Firs
 sudo apt update
 ```
 
-And finally, install the Debian package via the command:
+And finally, being under the `~/Downloads` directory, install the Debian package via the command:
 
 ```
 sudo apt install ./google-chrome-stable_current_amd64.deb
 ```
 
-![Kali - Update and Upgrade](https://github.com/boufik/Cyber-Handbook-Practices/blob/main/VMs/Kali/Images/kali_docker.png)
+![Kali - Chrome](https://github.com/boufik/Cyber-Handbook-Practices/blob/main/VMs/Kali/Images/kali_chrome.png)
 
 Now, Google Chrome has been successfully installed in our system and we can search for it in the applications.
 
+## 4e. Install VS Code
+
+As above, try to manually install the `.deb` package from a web browser by navigating to `https://code.visualstudio.com` or `https://code.visualstudio.com/Download`. Download the package and find it under the `~/Documents` directory.
+
+```
+cd ~/Downloads
+ls
+```
+
+Terminal should print the package `code_1.105.1-1760482543_amd64.deb`. First, update your system through:
+
+```
+sudo apt update
+```
+
+And finally, being under the `~/Downloads` directory, install the Debian package via the command:
+
+```
+sudo dpkg -i code_1.105.1-1760482543_amd64.deb
+```
+
+During the installation process, which looks like this:
+
+![]()
+
+a message saying `` may appear from the system. Just press `Yes` and the installation will finish successfully.
 
 # 5. Snapshot
 
