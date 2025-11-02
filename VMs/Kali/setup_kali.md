@@ -6,7 +6,7 @@
 * The default folder for storing VM-related data on Windows is `C:\Users\<username>\VirtualBox VMs`.
 * In `ISO Image`: Supposing that we have downloaded `Kali Linux 2025.2` ISO image under the Windows default download location (`Downloads`), simply select: `C:\Users\<username>\Downloads\kali_2025_2.iso`.
 * By selecting the `ISO` image of the VM, fill in manually the other fields: `OS` = `Linux`, `OS Distribution` = `Debian` and `OS Version` = `Debian (64-bit)`.
-* Leave the field `Skil Unattended Installation` unselected.
+* Leave the field `Skip Unattended Installation` unselected.
 
 ## Tab 2 - Unattended Install
 
