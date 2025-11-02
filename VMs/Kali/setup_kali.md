@@ -77,72 +77,99 @@ Finally, press `Continue` to reboot.
 
 
 
-# 2. After the first VM's reboot
+# 3. After the first VM's reboot
 
-## 2a. Update and upgrade
-After the reboot, Ubuntu asks us some other things like reporting problems, diagnostics, e.t.c. Then, we need to update and upgrade our system using the commands:
+In case you installed the `Xfce` desktop environment, both username and password are required to log in. If you chose the `Gnome` installation, Kali prompts you to only fill in the password for the selected user.
+
+## 3a. Update and upgrade
+
+After the reboot, we need to update and upgrade our Kali system:
 
 ```
 sudo apt update
 sudo apt upgrade -y
-sudo apt install -y build-essential linux-headers-$(uname -r)
 ```
 
-The system has been updated by installing the essential build tools and kernel headers on Ubuntu (Debian-based).
+The  upgrade of the system may last about 15 minutes.
 
-![Ubuntu Downloads](https://github.com/boufik/Cyber-Handbook-Practices/blob/main/VMs/Ubuntu/Images/ub24_apt_upgrade.png)
+![Kali - Update and Upgrade](https://github.com/boufik/Cyber-Handbook-Practices/blob/main/VMs/Kali/Images/kali_upgrade.png)
 
-## 2b. Install Guest Additions
+Once it's done, `reboot` the system.
 
-In the navigation bar of VM, click on `Devices` and then `Insert Guest Additions CD image`. By doing so, in the left sidebar of Ubuntu, a logo with a disk appears. Clicking the disk logo opens a directory in the form `/media/<username>/VBox_GAs_7.1.12`. Inside, we can find several folders and files, but we only care about the `autorun.sh` file though. Right-click this file and select `Run as a program`. Insert your password and then the script runs. Among the output lines of the running shell are:
-```
-Verifying archive integrity... 100%     MD5 checksums are OK. All good.
-Uncompressing VirtualBox 7.1.12 Guest Additions for Linux    100%
-VirualBox Guest Additions installer
-VirualBox Guest Additions: Starting
-VirualBox Guest Additions: Setting up modules
-```
+## 3b. Install Kernel Headers
 
-After the installation, we can press any key (e.g. `Enter`) in the console and then we can safely restart again our VM.
-
-# 3. Install packages
-
-For any package we install we can use the `sudo apt install` or `sudo snap install` command (optionally with the falg `-y`), and then we can verify if the software is installed by writing a command like `<package_name> --version` or `<package_name> -v`.
+After the reboot, type this command to install the necessary Linux kernel headers:
 
 ```
-sudo apt install -y pip
-pip --version
+sudo apt-get install linux-headers-$(uname -r)
 ```
-Output: `pip 24.0 from /usr/lib/python3/dist-packages/pip (python 3.12)`.
+
+## 3c. Install Guest Additions
+
+In the navigation bar of VM, click on `Devices` and then `Insert Guest Additions CD image`. After this mount, a file beginning with `VBox_GAs` will appear in the filesystem, or it will have been installed in Desktop.
+
+![Kali - Update and Upgrade](https://github.com/boufik/Cyber-Handbook-Practices/blob/main/VMs/Kali/Images/kali_guest_additions.png)
+
+Open this folder with the CD icon and **copy everything** (both folders and files) inside it. Then, create a folder named `GuestAdditions` under the `Documents` directory. Paste all copied folders and files inside the newly created folder. Now, the `~/Documents/GuestAdditions` folder contains anything is inside the file beginning with `VBox_GAs`.
+
+If we type, `ls *run`, we will detect one or two scripts with the `.run` extension. We only care about the file `VBoxLinuxAdditions.run`. Change the permissions of this file by running the command `chmod 777` and then, execute the package:
 
 ```
-sudo apt install -y git
-git --version
+sudo chmod 777 VBoxLinuxAdditions.run
+sudo ./VBoxLinuxAdditions.run
 ```
-Output: `git 2.43.0`.
+
+![Kali - Update and Upgrade](https://github.com/boufik/Cyber-Handbook-Practices/blob/main/VMs/Kali/Images/kali_execute_run.png)
+
+This will take about a minute to run after typing `yes` to the terminal prompt. Then, restart again your VM by typing `reboot` in order for these changes to be applied.
+
+
+
+# 4. Install Software
+
+## 4a. Pre-installed packages
+
+After the restart, we can make a snapshot of our machine to be more safe. For any package we install, we can use the `sudo apt install` command (optionally with the flag `-y`), and then we can verify if the software is installed by writing a command like `<package_name> --version` or `<package_name> -v`.
+
+By default, Kali comes with some pre-installed software and tools. Besides, we selected such a choice during the installation process. We can verify that `python3`, `pip`, `pip3`, `git` and `curl` are already installed.
+
+## 4b. Install `docker`
+
+As stated in the official page of Kali Linux about Docker (`https://www.kali.org/docs/containers/installing-docker-on-kali/`), Kali Linux has already a package named `docker`, so we need to install `docker-ce` from Docker repository. Run the command:
 
 ```
-sudo apt install -y net-tools
+echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/debian bookworm stable" | \
+  sudo tee /etc/apt/sources.list.d/docker.list
 ```
-Output: the command `ifconfig` should work now.
+Terminal will print this: `deb [arch=amd64 signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/debian bookworm stable`
+
+Then, import the `gpg` key:
 
 ```
-sudo apt install -y curl
-curl --version
+curl -fsSL https://download.docker.com/linux/debian/gpg |
+  sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg
 ```
-Output: `curl 8.5.0 (x86_64-pc-linux-gnu) ...`.
+
+Finally, install the latest version of `docker-ce`:
 
 ```
-sudo snap install docker
+sudo apt update
+```
+```
+sudo apt install -y docker-ce docker-ce-cli containerd.io
+```
+
+The output in the console should look like this:
+
+![Kali - Update and Upgrade](https://github.com/boufik/Cyber-Handbook-Practices/blob/main/VMs/Kali/Images/kali_docker.png)
+
+If all things were done properly, you can now see a Docker version like `28.5.1`, when typing the command"
+
+```
 docker --version
 ```
-Output: `docker 28.4.0 from Canonical✅ installed`.
 
-```
-sudo apt install -y docker-compose
-docker-compose --version
-```
-Output: `docker-compose 1.29.2, build unknown`.
+## 4c. Add user to the `docker` group
 
 Sometimes, we want to execute Docker-related commands without needing to include `sudo` in every command. For this purpose, we need to create the Docker `group` and add our user to the group:
 
@@ -151,8 +178,8 @@ sudo groupadd docker
 sudo usermod -aG docker $USER
 ```
 
-In order for the last command to be "registered", we need to restart our VM. So, in the next VM session, we will execute Docker commands without `sudo`.
+In order for the last command to be "registered", we need to restart our VM. So, in the next VM session, we will able to execute Docker commands without `sudo`.
 
-# 4. Snapshot
+# 5. Snapshot
 
 Before, we turn off our VM, it is a great idea to create a snapshot of the current state.
