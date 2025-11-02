@@ -5,18 +5,20 @@
 * In `Name`, put something recognizable like `Test`.
 * The default folder for storing VM-related data on Windows is `C:\Users\<username>\VirtualBox VMs`.
 * In `ISO Image`: Supposing that we have downloaded `Kali Linux 2025.2` ISO image under the Windows default download location (`Downloads`), simply select: `C:\Users\<username>\Downloads\kali_2025_2.iso`.
-* By selecting the `ISO` image of the VM, fill in manually the other fields: `OS` = `Linux`, `OS Distribution` = `Debian` and `OS Version` = `Debian (64-bit)`.
+* By selecting the `ISO` image of the VM, fill in manually the other fields: `OS/Type` = `Linux`, `OS Distribution/Subtype` = `Debian` and `OS Version` = `Debian (64-bit)`.
 * Leave the field `Skip Unattended Installation` unselected.
 
 ## Tab 2 - Unattended Install
 
-* Put your username and password - you need to remember them, as these will be your credentials during the first reboot of the VM.
+In some `VirtualBox` versions, this tab may be intouchable, so leave the fields to their default values. In case you can play with the values:
+
+* Put your username and password.
 * `Hostname` field is usually filled in automatically, taking the value of the `Name` we defined in the previous tab, here `Test`.
 * `Domain Name` is usually taken the value `myguest.virtualbox.org`.
 
 ## Tab 3 - Hardware
 
-* Put whatever value you want in `Base Memory` (ideally, higher than `2048 MB = 2 GB`) and `Processors` (ideally, higher than 2).
+* Put whatever value you want in `Base Memory` (ideally, higher than `2048 MB = 2 GB`) and `Processors` (ideally, higher than 2). Make sure that sliders stay in the green color area.
 * Leave the field `Enable EFI` unselected.
 
 ## Tab 4 - Hard Disk
@@ -25,15 +27,55 @@
 * The first option `Create a Virtual Hard Disk Now` is usually automatically selected. Leave it this way. Put a value higher than `20 GB` in your VM.
 * Finally, leave the field `Pre-allocate Full Size` unselected. If we select it, then the size of the VM storage will be fixed and will not be able to increase to fit our needs. We need dynamic space allocation.
 
-## Next Steps
 
-After pressing `Finish`, the VM should automatically start running and downloading the necessary packages. If we do not see anything for some time at the beginning, we can always terminate the VM session. Then, we can configure its settings. Right-click in the VM using the GUI of VirtualBox and then press `Settings`. In the `Display` tab, set the `Video Memory` to the highest value (typically `128 MB`). Also, if we want our VM to automatically take an IP in the range of `192.168.0.0/16`, we need to go to the `Network` tab and change the value to `Bridged Adapter`. The `Name` will be in this form `Realtek ____CE Wireless LAN 802.11__ PCI NIC`, which is the NIC card.
+# 2. Start the VM for the first time
 
-Now, if we had terminated our VM previously, we need to restart it. Press `Try or install Ubuntu` and the installation will begin shortly. If extra prompts appear next, press `Install` and `Erase disk and install Ubuntu` (do not worry - the `Erase` option does not refer to the original disk of our host machine). This may take some time. In any case, the installation process should look like this:
+## 2a. Loading additional components
 
-![Ubuntu Downloads](https://github.com/boufik/Cyber-Handbook-Practices/blob/main/VMs/Ubuntu/Images/ub24_being_installed.png)
+After pressing `Finish`, the configuration of our Kali VM has been completed, so we may need to start it manually. This allows us to configure some extra settings in prior to our first VM boot. Right-click in the VM using the GUI of VirtualBox and then press `Settings`.
 
-After the installation is complete, Ubuntu prompts us to fill in some other fields like username, password, computer name and region. Leave the field `Require my password to log in` **selected**. Then, Ubuntu instructs us to restart our VM, so we ned to follow this instruction.
+* In the `Display` tab, set the `Video Memory` to the highest value (typically `128 MB`) Also, we can select `Enable 3D acceleration`, but this is optional.
+* If we want our VM to automatically take an IP in the range of `192.168.0.0/16`, we need to go to the `Network` tab and change the value to `Bridged Adapter`. The `Name` will be in this form `Realtek ____CE Wireless LAN 802.11__ PCI NIC` or `Realtek Gaming ____ Family Controller`, which is the NIC card.
+* In any case, we can always set the `Shared Clipboard` or `Drag'n'Drop` to `Bidirectional` instead of the default value of `Disabled`. We can find these settings under the `Advanced` tab of `General`.
+
+Manually start the VM. Press `Graphical install` and the installation will begin shortly. At this point, you only need to select your language and region. After this, you will see something like this:
+
+![Kali First Packages](https://github.com/boufik/Cyber-Handbook-Practices/blob/main/VMs/Kali/Images/kali_first.png)
+
+## 2b. Installing the base system
+
+The next window will prompt you to:
+
+* Put the `Hostname` of this VM - You can either leave the default `kali` option or put something more specific or meaningful for you.
+* For `Domain name`, you can leave it completely empty.
+* In the next tabs, determine your username and the password of this user.
+* In `Partition Disks`, select `Guided - use entire disk`.
+* In the following tab, the `disk to partition` will be automatically named like this: `SCSI3 (0, 0, 0) (sda) - ___ GB ATA VBOX HARDDISK`. Press `Continue`.
+* Press `All files in one partition (recommended for new users)` and `Finish partitioning and write changes to disk`.
+* In the question `Write changes to disks?` --> Press `Yes`.
+* Then, some minutes will pass due to the installation of the base system.
+
+![Kali Installation of base system](https://github.com/boufik/Cyber-Handbook-Practices/blob/main/VMs/Kali/Images/kali_base_install.png)
+
+## 2c. Select and install software
+
+* The next tab refers to the software selection process. First, we need to choose which desktop environment we will use (imagine desktop environment as a Kali Linux "skin"). The available options are `Xfce` (checked by default), `Gnome` and `KDE plasma`. We can stick with `Xfce`, which is lightweight.
+* The last 3 choices are about Kali Linux tools. Let them checked, because we may need some of these tools in the future.
+
+The desktop installation is expected to last about 15 minutes.
+
+![Kali Installation of SW - Desktop environment and tools](https://github.com/boufik/Cyber-Handbook-Practices/blob/main/VMs/Kali/Images/kali_SW_install.png)
+
+## 2d. Boot Loader
+
+* In the question `Install the GRUB boot loader to your primary drive?`, select `Yes`.
+* Then, choose the option beginning with `/dev/sda` for the boot loader installation.
+
+![Kali Installation of SW - Desktop environment and tools](https://github.com/boufik/Cyber-Handbook-Practices/blob/main/VMs/Kali/Images/kali_finish.png)
+
+Finally, press `Continue` to reboot.
+
+
 
 # 2. After the first VM's reboot
 
