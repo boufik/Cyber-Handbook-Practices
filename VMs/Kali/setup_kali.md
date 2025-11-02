@@ -207,14 +207,14 @@ Now, Google Chrome has been successfully installed in our system and we can sear
 
 ## 4e. Install VS Code
 
-As above, try to manually install the `.deb` package from a web browser by navigating to `https://code.visualstudio.com` or `https://code.visualstudio.com/Download`. Download the package and find it under the `~/Documents` directory.
+As above, try to manually install the `.deb` package from a web browser by navigating to `https://code.visualstudio.com` or `https://code.visualstudio.com/Download`. Download the `.deb` package and find it under the `~/Documents` directory.
 
 ```
 cd ~/Downloads
 ls
 ```
 
-Terminal should print the package `code_1.105.1-1760482543_amd64.deb`. First, update your system through:
+Terminal should print a package named like `code_1.105.1-1760482543_amd64.deb`. First, update your system through:
 
 ```
 sudo apt update
@@ -226,11 +226,13 @@ And finally, being under the `~/Downloads` directory, install the Debian package
 sudo dpkg -i code_1.105.1-1760482543_amd64.deb
 ```
 
-During the installation process, which looks like this:
+During the installation process, whose console output looks like this:
 
-![]()
+![Kali - Installing VSCode](https://github.com/boufik/Cyber-Handbook-Practices/blob/main/VMs/Kali/Images/kali_vscode.png)
 
-a message saying `` may appear from the system. Just press `Yes` and the installation will finish successfully.
+a message saying `Add Microsoft apt repository for Visual Studio Code` may appear from the system. Just press `Yes` and the installation will finish successfully.
+
+![Kali - VSCode MS apt repo message](https://github.com/boufik/Cyber-Handbook-Practices/blob/main/VMs/Kali/Images/kali_vscode_MS_apt_repo.png)
 
 # 5. Snapshot
 
