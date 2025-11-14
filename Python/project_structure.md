@@ -46,34 +46,44 @@ pydefense/                        # Project root (NOT a Python package)
 ├── requirements.txt
 ├── pyproject.toml                # NECESSARY, to make our project importable - editable install
 └── .gitignore
-
 ```
 
 
+# 2. Files and Folders
 
+Our project root folder `pydefense` should contain these files and folders:
 
+## a) Root Files
 
-A minimal `pyproject.toml` is:
+Under root, we have:
+
+* `pyproject.toml`: This folder is **super essential for editable install** of our project. We need one `.toml` file at the root of the project. This instructs Python and pip, where our package lives. One minimal version of this file will be provided below.
+* `README.md`: For documentation purposes.
+* `.gitignore`: If we intend to push our project content in GitGub.
+* `requirements.txt`: We can put any dependencies here.
+
+A minimal `pyproject.toml` could be:
+
 ```
 [project]
 name = "project"
 version = "0.1.0"
-description = "OSINT and Cyber Threat Intelligence automation toolkit"
+description = "A defense automation toolkit"
 readme = "README.md"
 requires-python = ">=3.10"
 
 # Runtime dependencies
 dependencies = [
-    "pymongo",
+    "numpy",
     "pandas",
     "requests",
     "beautifulsoup4",
-    "pydantic"
+    "pymongo"
 ]
 
 # Optional metadata
 authors = [
-    { name = "Your Name", email = "youremail@example.com" }
+    { name = "my_name", email = "my_email" }
 ]
 
 [build-system]
@@ -82,7 +92,35 @@ requires = ["setuptools", "wheel"]
 build-backend = "setuptools.build_meta"
 
 [tool.setuptools.packages.find]
-# Tells setuptools: "Look inside src/ for packages"
+# Instructs setuptools: "Look inside src/ for packages"
 where = ["src"]
-
 ```
+
+## b) Root Folders
+
+Under root, we also have as siblings of the 4 previous files:
+
+* `venv`: It can also be outside the root of the project, but being here does not pose any problem. We can exclude it in versioning by using the sibling file `.gitignore`.
+* `src`: This is where our **source code lives** - this is where our **Python package will be located**. Under `src`, only the folder to be imported (`pydefense`) should be present. This is related to the `where` section inside the `pyproject.toml`, in which we instruct `setuptools` to search under the directory we want (`src`) for packages.
+
+
+## c) The `src` folder
+
+As we mentioned above, this folder should only contain the code of our tool `pydefense`. This will be an importable Python package (effect only under this `venv`) and we can be able to use dot notation like `pydefense.modules.module1`. This way, the `src/pydefense` will be **the only real package**.
+
+Notes:
+1. We should NOT treat the project root as a Python package. The Python package will be located explicitly under the `src` folder.
+2. The `venv` folder should never be located inside `src`. We can create it either in the root of the project, or completely in another location
+
+## d) The Python package folder `pydefense`
+
+We need to remember that the first `__init__.py` file MUST BE UNDER the Python package folder. So, our first concern is to create an empty `__init__.py` file. The `__init__.py` files are necessary, so that Python understands any folder as an importable module. Besides, you will have noticed that **every folder** under the `pydefense`
+
+
+
+
+
+# Run
+
+`pip install -e .`
+This creates our project into a Python package.
