@@ -114,13 +114,25 @@ Notes:
 
 ## d) The Python package folder `pydefense`
 
-We need to remember that the first `__init__.py` file MUST BE UNDER the Python package folder. So, our first concern is to create an empty `__init__.py` file. The `__init__.py` files are necessary, so that Python understands any folder as an importable module. Besides, you will have noticed that **every folder** under the `pydefense`
+We need to remember that the first `__init__.py` file MUST BE UNDER the Python package folder. So, our first concern is to create an empty `__init__.py` file. **The `__init__.py` files are necessary, so that Python understands any folder as an importable module**. Besides, from the first section of the documentation (`Filesystem Structure`), you will have noticed that **every folder** under the `pydefense`. This is essential to use dot notation between our modules. So, under `pydefense`, we have:
+
+### Files
+
+* `__init__.py`: Necessary for dot notation and editable install.
+* `main.py`: The main script file that will combine the functionalities, described in the functions of its sibling folders.
+
+## Folders
+
+* `auxiliary`: Put any auxiliary functions for visualization and of course an empty `__init__.py`, symbolizing that Python will detect it as a module under `k3recon`.
+* `modules`: Include a `__init__.py`
+* `tools`: Include a `__init__.py`
 
 
+# 3. Run `main.py`
 
+After setting up this structure, including the empty `__init__.py` files and the minimal `pyproject.toml` file, you can populate your project by adding content in the `main.py` and the scripts under the `src/pydefense` folders. But first, you need to install your project as a Python package using `pip`, so first go to the root directory and type these commands. **It is important to run this command under the root directory.**
 
-
-# Run
-
-`pip install -e .`
-This creates our project into a Python package.
+```
+cd /home/user/Desktop/pydefense
+pip install -e .
+```
