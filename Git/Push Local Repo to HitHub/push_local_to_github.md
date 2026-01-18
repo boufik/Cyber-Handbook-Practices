@@ -36,7 +36,7 @@ __pycache__/
 .idea/
 ```
 
-Then, we need to stage and commit **ONLY** the `.gitignore` file. So, the first time we use the command `git add` will refer to this file. The following command ensures ignored files will stay ignored when you add everything else!
+Then, we need to stage and commit **ONLY** the `.gitignore` file. So, the first time we use the command `git add`, it will refer to this file. The following command ensures ignored files will stay ignored when you add everything else!
 
 ```
 git add .gitignore
@@ -62,7 +62,7 @@ At this point, ANY local change has been tracked locally!
 
 # 5. Create a GitHub repo with the same name
 
-Supposing that the name of the code folder is `streamapp`, we need to navigate to GitHub and create **manually** a new repository with the **exact same name** as the local folder. In the online platform of GitHub, while creating this repote repository, be careful NOT to include:
+Supposing that the name of the code folder is `streamapp`, we need to navigate to GitHub and create **manually** a new repository with the **exact same name** as the local folder. In the online platform of GitHub, while creating this repote repository, **be careful NOT to include**:
 * a `README.md` file
 * a `.gitignore` file
 * any license
