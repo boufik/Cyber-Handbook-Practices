@@ -1,0 +1,24 @@
+A nice content for your `.gitignore` file could be the following:
+
+```
+# ---- Bytecode and Compiled Files ----
+__pycache__/
+*.py[cod]
+*$py.class
+
+# ---- venv ----
+venv/
+.venv/
+
+# ---- Distribution and Packaging ----
+build/
+dist/
+*.egg-info/
+.eggs/
+*.egg
+
+# ---- Environment Variables ----
+.env
+.env.local
+.env.*
+```
