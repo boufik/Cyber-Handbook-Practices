@@ -1,5 +1,7 @@
 # Error
 
+![APT error](https://github.com/boufik/Cyber-Handbook-Practices/blob/main/VMs/Images/apt_error_dependencies.png)
+
 Whren trying to `sudo apt update && sudo apt upgrade -y`, you can sometimes take this error:
 
 ```
