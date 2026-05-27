@@ -16,8 +16,9 @@ Visit [https://nodejs.org/en](https://nodejs.org/en) and download the LTS instal
 ```powershell
 node -v
 ```
+You should see something like `v24.16.0`.
 
-In Linux you can try this:
+Also, in Linux you can try this:
 ```
 curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.1/install.sh | bash
 ```
@@ -25,8 +26,6 @@ curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.1/install.sh | bash
 ```
 nvm install --lts
 ```
-
-You should see something like `v24.16.0`.
 
 ### 1.2 Install the Claude Code Agent
 
