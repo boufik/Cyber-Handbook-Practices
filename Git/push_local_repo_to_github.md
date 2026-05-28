@@ -15,7 +15,7 @@ cd /..../streamapp
 git init
 ```
 
-# 3. About `.gitignore`
+# 3. Commit 1 - `.gitignore`
 
 If the code inside our `streamapp` folder is written in Python, a `venv` folder may also be present inside the folder `streamapp`. You activate and deactivate this `venv` in order to `pip install` and run your code with the command `python`. But, we do NOT want such **files** to be pushed in our remote repo. An example of a **folder** we would NOT like to push remotely as well is the folder `__pycache__`. Thus, we need to configure our local repo in a way that does NOT care about these files and their corresponding changes. We need to create a `.gitignore` file by typing the command `touch .gitignore` under the directory of our project (`/.../streamapp`).
 
@@ -43,7 +43,7 @@ git add .gitignore
 git commit -m "First CLI commit - Added the file .gitignore to exclude venv and IDE files"
 ```
 
-# 4. Commit the local folder code changes
+# 4. Commit 2 - Add the local codebase
 
 By typing `git status`, we can see that the **other code changes** are still not tracked. The only file that has been committed so far is the `.gitignore` file. So:
 
