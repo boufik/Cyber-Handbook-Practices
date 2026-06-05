@@ -12,8 +12,20 @@ SQLite is fundamentally different from PostgreSQL, MySQL and MongoDB. *It is NOT
 
 ### 1.1 Install and create the database
 
+To download and install `sqlite3`, use `apt install sqlite3` in Linux and `winget install SQLite.SQLite` in Windows, as shown below:
 ```bash
 sudo apt install sqlite3                 # One-time install
+```
+or
+```powershell
+winget install SQLite.SQLite
+```
+
+![winget install](./Images/winget.png)
+
+Afterwards, create the folder and the `.db` database file:
+
+```bash
 mkdir -p ~/databases/cve-sqlite          # Working directory
 cd ~/databases/cve-sqlite
 sqlite3 cves.db                          # Opens the SQLite shell
