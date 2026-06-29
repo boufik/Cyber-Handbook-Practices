@@ -15,7 +15,7 @@ CONTAINER ID   IMAGE                             NAMES                          
 6cfa9d43a603   docker/welcome-to-docker:latest   welcome-to-docker                     Up 3 minutes
 ```
 
-# 2. `docker inspect`
+# 2. `docker inspect` for IPs
 
 View IP per container:
 ```
@@ -29,4 +29,15 @@ Output:
 /vuln-web - 172.17.0.3
 /welcome2 - 172.17.0.4
 /welcome-to-docker - 172.17.0.2
+```
+
+# 3. `docker inspect` for restart policy
+```
+docker inspect -f '{{.Name}} - {{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}} - {{.HostConfig.RestartPolicy.Name}}' $(docker ps -q)
+```
+
+Output:
+```
+/vuln-web  -  172.17.0.2  -  always
+/mongodb1  -  172.17.0.3  -  unless-stopped
 ```
