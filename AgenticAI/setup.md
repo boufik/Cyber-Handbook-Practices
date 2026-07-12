@@ -269,7 +269,11 @@ notepad $PROFILE
 Say `"yes"` if it offers to create the file in case it does not exist until now. Paste in:
 ```powershell
 function claude-dirs {
-    (Get-Content $HOME\.claude.json -Raw | ConvertFrom-Json).projects.PSObject.Properties.Name
+    Add-Type -AssemblyName System.Web.Extensions
+    $ser = New-Object System.Web.Script.Serialization.JavaScriptSerializer
+    $ser.MaxJsonLength = [int]::MaxValue
+    $dict = $ser.DeserializeObject((Get-Content $HOME\.claude.json -Raw))
+    $dict.projects.Keys
 }
 ```
 Open a new terminal or reload by runnring `. $PROFILE`. Now, we can run `claude-dirs` anytime from anywhere.
