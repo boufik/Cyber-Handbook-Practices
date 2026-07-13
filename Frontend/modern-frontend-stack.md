@@ -928,7 +928,7 @@ That is the whole bridge. **One `<div>` and React fills it.** Every other elemen
 
 - **Client-side rendering means an effectively empty `index.html`.** `curl` the deployed site and you get a blank `<div id="root">`. This is bad for SEO, and it is worth remembering when your own tooling crawls single-page applications. The interesting content is in the JS bundle, not the HTML.
 
-- **The bundle is public.** Everything in your shipped JavaScript — API base URLs, `VITE_*` variables, internal endpoint names, comments you forgot to strip — is readable by anyone with DevTools. **Minification is not obfuscation.**
+- **The bundle is public.** Everything in your shipped JavaScript such as API base URLs, `VITE_*` variables, internal endpoint names, comments you forgot to strip, is readable by anyone with DevTools. **Minification is not obfuscation.**
 
 - **There is a real learning cliff.** You have traded "open a file and edit it" for a build pipeline with half a dozen configuration files. When it breaks, you now need to know *which* tool broke.
 
