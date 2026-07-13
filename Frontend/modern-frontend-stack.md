@@ -796,13 +796,13 @@ const buttonVariants = cva(
 );
 ```
 
-Create `my-security-tool/ui/src/features/scans/StartReconButton.tsx`:
+Create `my-security-tool/ui/src/features/scans/StartScanButton.tsx`:
 
 ```tsx
 import { Button } from '@/components/ui/button';
 
-export function StartReconButton() {
-  return <Button variant="brand">Start recon</Button>;
+export function StartScanButton() {
+  return <Button variant="brand">Start scan</Button>;
 }
 ```
 
@@ -926,7 +926,7 @@ That is the whole bridge. **One `<div>` and React fills it.** Every other elemen
 
 - **`node_modules/` is a supply-chain surface.** Hundreds of transitive packages from strangers, some with `postinstall` scripts that execute arbitrary code at install time. `npm audit` is noisy but not optional. Use `npm ci` (never bare `npm install`) in CI and Docker so the lockfile is authoritative.
 
-- **Client-side rendering means an effectively empty `index.html`.** `curl` the deployed site and you get a blank `<div id="root">`. This is bad for SEO, and it is worth remembering when your own recon tooling crawls single-page applications — the interesting content is in the JS bundle, not the HTML.
+- **Client-side rendering means an effectively empty `index.html`.** `curl` the deployed site and you get a blank `<div id="root">`. This is bad for SEO, and it is worth remembering when your own tooling crawls single-page applications. The interesting content is in the JS bundle, not the HTML.
 
 - **The bundle is public.** Everything in your shipped JavaScript — API base URLs, `VITE_*` variables, internal endpoint names, comments you forgot to strip — is readable by anyone with DevTools. **Minification is not obfuscation.**
 
