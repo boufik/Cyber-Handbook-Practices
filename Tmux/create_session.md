@@ -38,7 +38,15 @@ If we just want a quick peek on the status of the task, without reattaching, jus
 tmux capture-pane -t my_bg_task -p | tail -10
 ```
 
-# 6. Useful commands
+# 6. Save the output to a `.log` file after the task finishes
+
+```bash
+tmux capture-pane -t my_bg_task -p -S - > /home/user/my_project/output-$(date +%F).log
+cat /home/user/my_project/output-*.log
+grep -iE 'skip|warn|error' /home/user/my_project/output-*.log | head -50
+```
+
+# 7. Useful commands
 
 To list all sessions an confirm that our task is indeed running (still alive):
 ```bash
