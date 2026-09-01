@@ -59,7 +59,3 @@ Worth knowing for your writeup: the eBPF Foundation now treats "eBPF" as a stand
 - File integrity, cryptographic-material extraction (TLS plaintext via uprobes), container escape detection, provenance/data-flow graphs for APT investigation
 
 **Performance** — `sched_ext` (pluggable schedulers, kernel 6.12+), storage and memory tuning.
-
-Set up a Vagrant/VM with a recent kernel (≥6.6) for this — you want BTF, fentry, LSM BPF, and `sched_ext` available.
-
-Send me the TRITON and SALUS details whenever you're ready — objectives, WPs, your role, pilot environments, and what the deliverables look like. Once I have those I can map specific eBPF capabilities to specific WP objectives and draft the deck around that rather than around generic benefits.
