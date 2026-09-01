@@ -1,5 +1,7 @@
 ## What it is
 
+**eBPF is a revolutionary technology with origins in the Linux kernel that can run sandboxed programs in a privileged context such as the operating system kernel. It allows sandboxed programs to run within the operating system, which means that application developers can run eBPF programs to add additional capabilities to the operating system at runtime.**
+
 eBPF lets you load small programs into the running Linux kernel and attach them to hook points — a syscall entry, a network packet arriving on a NIC, a function in a userspace binary — where they execute in a sandboxed VM every time that event fires. No kernel module, no reboot, no patching kernel source.
 
 The critical property is safety. Before loading, a **verifier** statically analyses the bytecode and rejects anything it can't prove terminates and stays in bounds: no unbounded loops, no arbitrary memory access, bounded stack, limited instruction count. If it loads, it can't panic your kernel. After verification a JIT compiler translates the bytecode to native instructions, so it runs at near-native speed.
