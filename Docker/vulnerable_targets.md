@@ -31,16 +31,46 @@ These four use published images and need nothing but the run command.
 ## A1. `nginx` on TCP 80
 
 Web server with a recognisable version banner.
-The volume is the webroot, which is safe to bind-mount empty. You just get an empty index, but nginx still starts.
-**Do not** mount over `/etc/nginx`.
+To get a **200 OK (not a 403)**, the webroot must contain an `index.html` file.
+nginx serves from `/usr/share/nginx/html`.
+If you bind-mount an **empty** host directory over that path, you hide the image's built-in default page and nginx returns **403 Forbidden**.
+It has no index to serve and directory listing is off.
+So, create the host dir and drop an index file in it *before* running.
 
 ```bash
+# 1. Prepare the webroot with at least an index file
+mkdir -p ~/dockerhosts/nginx
+echo '<h1>Thomas Boufikos Nginx Lab</h1>' > ~/dockerhosts/nginx/index.html
+
+# 2. Run, while mounting the NON-EMPTY dir at the correct webroot path
 docker run -d --name nginx \
   -p 80:80 \
   -v ~/dockerhosts/nginx:/usr/share/nginx/html \
   --restart always \
-  nginx:1.14.0
+  nginx:1.10.1
+
+# 3. Verify and expect "HTTP/1.1 200 OK" and "Server: nginx/1.10.1"
+curl -sI http://<Docker_Container_IP>
 ```
+
+*Note:* **Do not** mount over `/etc/nginx`, since that shadows the config and nginx won't start.
+
+> **Note on the 403 vs 200 behaviour (and a misleading "fix").**
+> An empty bind-mount over the webroot → **403**. Two ways people accidentally get a 200:
+> - Run **without** the `-v` at all. nginx serves its own baked-in default page
+>   (a `Last-Modified` date years in the past is the tell that it's the image's page, not yours).
+> - **Misspell the mount target** (e.g. `/usr/share/ngingx/html`).
+>   The volume then lands on a path nginx never reads, the real webroot is left untouched, and the default page survives → 200.
+>   This *looks* like it fixed things but is a dead mount:
+>   files you put in that host dir are never served. Always mount the correctly-spelled `/usr/share/nginx/html`.
+>
+> For a **fingerprint target**, note the 403 response still leaks `Server: nginx/1.10.1`, so a scanner reads the version regardless of status code.
+>  The index file only matters if you want the page to actually load.
+
+> **Version caveat.** Very old tags (roughly pre-2017, e.g. `nginx:1.10.0`) were published as schema-1 manifests,
+> which current Docker Engine (25+) refuses with a
+> "manifest version … schema 1 support has been removed" error.
+> Versions `1.10.1` and `1.10.3` still pull. If a tag is rejected, step forward until one works (`1.12` → `1.14` → `1.18`).
 
 ## A2. `pure-ftpd` on TCP 21 (+ passive range 30000–30009)
 
