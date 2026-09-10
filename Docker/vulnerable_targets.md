@@ -196,27 +196,59 @@ docker run -d --name ntpd -p 123:123/udp --restart always ntpd-image
 
 ## B3. `Postfix` on TCP 25
 
-SMTP server with a set banner.
-Swap to **Exim** by installing `exim4-daemon-light` and
-using `CMD ["exim", "-bd", "-v"]` instead.
-That flips the fingerprint to `"Exim smtpd"`.
-Watch for a local MTA already occupying host port 25.
+SMTP server on Debian 8 "Jessie" (Postfix 2.11.3). Three details make this container work, and it is useless without all three:
+
+1. **Jessie, not older.** Squeeze and Wheezy carry glibc 2.11/2.13 and apt 0.8, which segfault on a modern host (`Method http has died unexpectedly`).
+   Jessie's glibc 2.19 and apt 1.0.9 are fine. Bullseye would work too but ships Postfix 3.5, which is too recent to be interesting.
+2. **The debconf preseed.** Without it, `postfix` installs under `DEBIAN_FRONTEND=noninteractive` as "No configuration" 
+   and no daemon ever starts. The build still succeeds, so the failure is silent.
+3. **Two parenthesised groups in the banner.** nmap only extracts a Postfix version from a banner shaped `... ESMTP Postfix (version) (distro)`.
+   With a single group it falls through to a prefix-only match and reports `Postfix smtpd` with an empty version and an unversioned CPE.
+   Keep `(Debian)` plain. `(Debian/GNU)` contains a slash, which falls outside nmap's character class and drops you back to the versionless match.
+   `postfix start-fg` does not exist before Postfix 3.0, so 2.11.3 must start the daemon and hold the foreground separately.
 
 **`~/dockerhosts/postfix/Dockerfile`**
 
 ```dockerfile
-FROM debian:bullseye-slim
-RUN apt-get update && apt-get install -y postfix && rm -rf /var/lib/apt/lists/*
-RUN postconf -e "myhostname = mail.lab.local" \
- && postconf -e "smtpd_banner = \$myhostname ESMTP Postfix"
+FROM debian/eol:jessie
+ENV DEBIAN_FRONTEND=noninteractive
+
+# Jessie is archived: pin apt at archive.debian.org, skip the expired
+# Valid-Until check and accept unsigned packages.
+RUN set -eux; \
+    echo 'deb http://archive.debian.org/debian jessie main contrib non-free' > /etc/apt/sources.list; \
+    echo 'Acquire::Check-Valid-Until "false";' > /etc/apt/apt.conf.d/99no-check-valid; \
+    echo 'APT::Get::AllowUnauthenticated "true";' > /etc/apt/apt.conf.d/99allow-unauth; \
+    apt-get update
+
+RUN set -eux; \
+    echo "postfix postfix/main_mailer_type select Internet Site" | debconf-set-selections; \
+    echo "postfix postfix/mailname string mail.lab.local"        | debconf-set-selections; \
+    apt-get install -y --force-yes postfix rsyslog; \
+    rm -rf /var/lib/apt/lists/*
+
+RUN set -eux; \
+    postconf -e 'smtpd_banner = $myhostname ESMTP $mail_name ($mail_version) (Debian)'; \
+    postconf -e 'myhostname = mail.lab.local'; \
+    postconf -e 'mydestination = mail.lab.local, localhost'; \
+    postconf -e 'inet_interfaces = all'; \
+    postconf -e 'inet_protocols = ipv4'; \
+    postconf -e 'mynetworks = 0.0.0.0/0'; \
+    newaliases; \
+    touch /var/log/mail.log
+
 EXPOSE 25
-CMD ["postfix", "start-fg"]
+CMD ["/bin/sh","-c","rsyslogd; postfix start; sleep 3; postfix status; exec tail -f /var/log/mail.log"]
 ```
 
 ```bash
 docker build -t postfix-image ~/dockerhosts/postfix
-docker run -d --name postfix -p 25:25 --restart always postfix-image
+docker run -d --name postfix --restart always postfix-image
 ```
+
+Swap to **Exim** by installing `exim4-daemon-light` and using `CMD ["exim", "-bd", "-v"]`.
+That flips the fingerprint to `"Exim smtpd"`, and Exim advertises its version in the banner by default, so no `smtpd_banner` equivalent is needed.
+No `-p 25:25` here: the scans target container IPs directly, and publishing the port collides with any MTA already on the host.
 
 ## B4. `Telnet` on TCP 23
 
