@@ -39,7 +39,7 @@ docker run -d --name nginx \
   -p 80:80 \
   -v ~/dockerhosts/nginx:/usr/share/nginx/html \
   --restart always \
-  nginx:1.18
+  nginx:1.14.0
 ```
 
 ## A2. `pure-ftpd` on TCP 21 (+ passive range 30000–30009)
