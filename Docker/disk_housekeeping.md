@@ -42,5 +42,33 @@ Removes images. **Without the flag `-a` it only deletes dangling images (untagge
 
 
 
+# 6. Remove unused volumes
+Removes **anonymous and named volumes not currently attached to any container** (running or stopped).
+This is the one cleanup step that can destroy data.
+A volume holding a database's files is "unused" the moment its container is removed, and pruning it wipes that data permanently.
+There is no undo.
+```bash
+docker volume prune -f
+```
+
+By default this targets anonymous volumes plus unreferenced named ones.
+To include **all** unused named volumes explicitly, add `-a`:
+```bash
+docker volume prune -a -f
+```
+
+
+**Check before you prune.**
+A volume only needs to be *detached* to be pruned.
+The container being stopped or removed is enough, it does not need to be deleted deliberately.
+List what would go first:
+```bash
+docker volume ls -f dangling=true
+```
+Anything you want to keep should be attached to a container, or backed up, before running the prune. This is the command that can silently erase a database you forgot was only living in a volume.
+
+
+
+
 # Summary
 The overall sequence is a fairly aggressive cleanup. It is fine for reclaiming space, just expect slower first builds and a round of image re-pulls afterward. One redundancy note: Since `docker builder prune --all -f` supersedes the plain docker builder prune -f right above it, you can drop the first of the two.
