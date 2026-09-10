@@ -194,7 +194,7 @@ docker run -d --name ntpd -p 123:123/udp --restart always ntpd-image
 
 > Verify with a UDP scan like `nmap -sU -p123 localhost`, since a plain TCP Nmap scan will never show it.
 
-## B3. `Postfix` on TCP 25
+## B3. `Postfix`
 
 SMTP server on Debian 8 "Jessie" (Postfix 2.11.3). Three details make this container work, and it is useless without all three:
 
@@ -313,6 +313,52 @@ sudo nmap -sV -p- localhost
 sudo nmap -sV -sU -p123 localhost
 ```
 
+## B6 `exim`
+
+Unlike `Postfix` which needs special tricks to advertise its version in its banner, `exim` does it by default:
+
+```dockerfile
+FROM debian/eol:jessie
+ENV DEBIAN_FRONTEND=noninteractive
+
+RUN set -eux; \
+    echo 'deb http://archive.debian.org/debian jessie main' > /etc/apt/sources.list; \
+    echo 'Acquire::Check-Valid-Until "false";' > /etc/apt/apt.conf.d/99no-check-valid; \
+    echo 'APT::Get::AllowUnauthenticated "true";' > /etc/apt/apt.conf.d/99allow-unauth; \
+    apt-get update; \
+    apt-get install -y --force-yes exim4-daemon-light; \
+    rm -rf /var/lib/apt/lists/*
+
+# Debian's exim4 binds to 127.0.0.1 only by default. Empty dc_local_interfaces
+# means all interfaces -- without this the container runs but the port is shut.
+RUN set -eux; \
+    echo 'mail.lab.local' > /etc/mailname; \
+    printf "%s\n" \
+      "dc_eximconfig_configtype='internet'" \
+      "dc_other_hostnames='mail.lab.local'" \
+      "dc_local_interfaces=''" \
+      "dc_readhost=''" \
+      "dc_relay_domains=''" \
+      "dc_minimaldns='false'" \
+      "dc_relay_nets='0.0.0.0/0'" \
+      "dc_smarthost=''" \
+      "CFILEMODE='644'" \
+      "dc_use_split_config='false'" \
+      "dc_hide_mailname=''" \
+      "dc_mailname_in_oh='true'" \
+      "dc_localdelivery='mail_spool'" \
+      > /etc/exim4/update-exim4.conf.conf; \
+    update-exim4.conf
+
+EXPOSE 25
+CMD ["/usr/sbin/exim4", "-bd", "-v"]
+```
+
+```bash
+docker build -t exim-image ~/dockerhosts/exim
+docker run -d --name exim --restart always exim-image
+```
+
 ---
 
 
@@ -331,3 +377,4 @@ sudo nmap -sV -sU -p123 localhost
 | postfix    | `postfix`   | 25/tcp       | build        | `postfix-image`            |
 | telnet     | `telnet`    | 23/tcp       | build        | `telnet-image`             |
 | rdp        | `rdp`       | 3389/tcp     | build        | `rdp-image`                |
+| exim       | `exim`      | 25/tcp       | build        | `exim-image`               |
