@@ -44,8 +44,8 @@ instructions are allowed**.
         - Math                                   - Math
         - Conditions                             - Conditions
         - Loop                                   - Loop
-        - Manage CPU mode                        - Nothing that can touch
-        - Manage memory boundaries                 hardware or other processes
+        - Manage CPU mode                        - Nothing that can touch hardware or other processes
+        - Manage memory boundaries                 
         - Talk to I/O devices
 ```
 
@@ -98,8 +98,8 @@ The kernel is not one binary large object (blob). It is a set of **subsystems**,
 
 ```bash
     +------------------------------- KERNEL -------------------------------+
-    |                       System Call Interface                          |  <-- closest part
-    +----------------------------------------------------------------------+      to user apps
+    |                       System Call Interface                          |  <-- closest part to user apps
+    +----------------------------------------------------------------------+      
     | Device  | I/O     | Virtual   | CPU       | Memory      | Interrupt  |
     | Drivers | Subsys  | File Sys  | Scheduler | Management  | Exceptions |
     +---------+---------+----------+-----------+-------------+-------------+
@@ -129,12 +129,14 @@ When the machine powers on, the kernel's own executable code has to be copied in
 ```bash
      MEMORY
     +-------------------------+   High addresses
-    |      KERNEL MEMORY      |   <-- Kernel image is loaded here during bootstrapping 
+    |      KERNEL MEMORY      |   <-- Kernel image is loaded here during bootstrapping
+    |           ...           |
     |           ...           |    
     |    10110101 01011010    |
     |    01101001 11010110    |
     |           ...           |
     +-------------------------+
+    |           ...           |
     |           ...           |
     |           ...           |
     +-------------------------+   Low addresses
@@ -156,7 +158,7 @@ process and hands over. That process is called **`init`** and it always gets **P
     +---------------------------+
     |       init  (pid = 1)     |   <- the ONLY user process created BY the kernel
     |  process's address space  |
-    +----------------------------+
+    +---------------------------+   Low addresses
 ```
 
 `init` is a very special process, because **no other user process has created it**. The kernel did and it acts as the ancestor of every other user process that will spawn.
