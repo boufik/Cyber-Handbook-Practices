@@ -195,8 +195,8 @@ Given that a user process can only be created by another user process (`fork`), 
             |  init (pid = 1)  |           <-- The ancestor user process
             +------------------+
                 /   |   \
-             ...   ...   ...               <-- Every other user process is a
-            /  \        /   \                  child of another user process
+             ...   ...   ...               <-- Every other user process is a child of another user process
+            /  \        /   \                  
           ...  ...    ...   ...
 ```
 
@@ -237,8 +237,7 @@ user@pc:~$ # Nothing happens
 ```bash
     if (group_dead) {
         /*
-         * If the last thread of global init has exited, panic
-         * immediately to get a useable coredump.
+         * If the last thread of global init has exited, panic immediately to get a useable coredump.
          */
         if (unlikely(is_global_init(tsk)))
             panic("Attempted to kill init! exitcode=0x%08x\n",
@@ -387,9 +386,9 @@ Example flow:
 In practice, there is **no clean definition** of which user-space programs are "the OS". Candidate rules, all leaky:
 
 ```bash
-    - Every program that ships with the OS?
-    - Every program that has no lower-level alternative?
-    - Every program started automatically by init?
+    - Every program that ships with the OS
+    - Every program that has no lower-level alternative
+    - Every program started automatically by init
 ```
 
 Counter-examples include the **GNU coreutils** (`ls`, `cp`, `mv`, `cat`, `chmod`, `rm`, `echo`, `kill`, `true`, `false`, `sleep`) and ~100 other tiny programs.
@@ -419,19 +418,21 @@ They obviously belong to "The operating System", yet **most of them are never st
       Shell  Terminal  Display Server  Desktop Env  Package Manager
       Task Mgr  Network Mgr  CoreUtils  Standard Library  SSH Server
     ---------------------------------------------------------------------------
-                          init   (pid = 1)    <-- The first user process
+                          init   (pid = 1)    <-- The first user process, the only one that is created by the kernel
     ---------------------------------------------------------------------------
-    
+
+
     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ <== THE BORDERLINE
-    
+
+
     =================    KERNEL SPACE  (CPU privileged mode)    ===============
 
     ---------------------------------------------------------------------------
                         System Call Interface
     ---------------------------------------------------------------------------
       Device Drivers   | I/O Subsystem     | Virtual File System
-      CPU Scheduler    | Memory Management | Interrupt & Exception Handler
-      Networking Stack | IPC Mechanisms    | Security & Access Control
+      CPU Scheduler    | Memory Management | Interrupt and Exception Handler
+      Networking Stack | IPC Mechanisms    | Security and Access Control
     ---------------------------------------------------------------------------
 
     ===========================================================================
@@ -450,7 +451,7 @@ Same idea drawn as concentric rings:
     |   |     /  System Call Interface            \          |       |
     |   |    |  CPU Scheduler   Memory Mgmt   VFS  |         |       |
     |   |    |  Device Drivers  Networking   IPC   |         |       |
-    |   |    |  Interrupts   Security & Access     |         |       |
+    |   |    |  Interrupts   Security and Access   |         |       |
     |   |     \                                   /          |       |
     |   |      '---------------------------------'           |       |
     |    \                                                  /        |
